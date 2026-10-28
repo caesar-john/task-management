@@ -1,0 +1,48 @@
+
+{{define "content"}}
+<div class="welcome">
+    <div>
+        <h2>Good day, Caesar 👋</h2>
+        <p>Test 123 wasu gila.</p>
+    </div>
+
+    <a href="/tasks/new" class="button button-primary">
+        + New Task
+    </a>
+</div>
+
+<div class="stats-grid">
+    <article class="stat-card">
+        <p>Total Tasks</p>
+        <h2>0</h2>
+        <span>Tasks in your workspace</span>
+    </article>
+
+    <article class="stat-card">
+        <p>In Progress</p>
+        <h2>0</h2>
+        <span>Tasks currently being worked on</span>
+    </article>
+
+    <article class="stat-card">
+        <p>Completed</p>
+        <h2>0</h2>
+        <span>Tasks finished</span>
+    </article>
+</div>
+
+<section class="panel">
+    <div class="panel-heading">
+        <div>
+            <h2>Recent Tasks</h2>
+            <p>Your latest task activities</p>
+        </div>
+
+        <a href="/tasks">View all</a>
+    </div>
+
+    <p class="empty-state">
+        No tasks yet. Create your first task!
+    </p>
+</section>
+{{end}}

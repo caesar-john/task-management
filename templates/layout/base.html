@@ -1,0 +1,26 @@
+
+{{define "base"}}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Taskly</title>
+    <link rel="stylesheet" href="/statics/style.css">
+</head>
+<body>
+    <div class="app">
+        {{template "sidebar" .}}
+
+        <main class="main-content">
+            {{template "header" .}}
+
+            <section class="page-content">
+                {{template "content" .}}
+            </section>
+        </main>
+    </div>
+</body>
+</html>
+
+{{end}}

@@ -1,0 +1,41 @@
+
+{{define "sidebar"}}
+<aside class="sidebar">
+    <div class="brand">
+        <div class="brand-icon">T</div>
+        <span>Taskly</span>
+    </div>
+
+    <p class="nav-label">WORKSPACE</p>
+
+    <nav class="navigation">
+        <a href="/" class="nav-item active">
+            <span></span>
+            Dashboard
+        </a>
+
+        <a href="/tasks" class="nav-item">
+            <span></span>
+            My Tasks
+        </a>
+
+        <a href="/projects" class="nav-item">
+            <span></span>
+            Projects
+        </a>
+
+        <a href="/calendar" class="nav-item">
+            <span></span>
+            Calendar
+        </a>
+    </nav>
+
+    <div class="sidebar-bottom">
+        <a href="/settings" class="nav-item">
+            <span>⚙</span>
+            Settings
+        </a>
+        <p class="sidebar-note">Stay focused. Get things done.</p>
+    </div>
+</aside>
+{{end}}
