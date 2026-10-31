@@ -2,40 +2,38 @@
 {{define "sidebar"}}
 <aside class="sidebar">
     <div class="brand">
-        <div class="brand-icon">T</div>
+        <div class="brand-icon" aria-hidden="true">&#10003;</div>
         <span>Taskly</span>
     </div>
 
-    <p class="nav-label">WORKSPACE</p>
+    <p class="nav-label">Workspace</p>
 
     <nav class="navigation">
-        <a href="/" class="nav-item active">
-            <span></span>
-            Dashboard
+        <a href="/dashboard" class="nav-item {{if eq .Filter "All"}}active{{end}}">
+            <span class="nav-icon" aria-hidden="true">&#8962;</span>
+            Home
         </a>
 
-        <a href="/tasks" class="nav-item">
-            <span></span>
+        <a href="/dashboard?status=Pending" class="nav-item {{if eq .Filter "Pending"}}active{{end}}">
+            <span class="nav-icon" aria-hidden="true">&#9776;</span>
             My Tasks
         </a>
 
-        <a href="/projects" class="nav-item">
-            <span></span>
-            Projects
-        </a>
-
-        <a href="/calendar" class="nav-item">
-            <span></span>
-            Calendar
-        </a>
     </nav>
 
     <div class="sidebar-bottom">
+        <p class="nav-label">Other</p>
         <a href="/settings" class="nav-item">
-            <span>⚙</span>
+            <span class="nav-icon" aria-hidden="true">&#9881;</span>
             Settings
         </a>
-        <p class="sidebar-note">Stay focused. Get things done.</p>
+        <div class="account-profile">
+            <div class="avatar">JD</div>
+            <div>
+                <strong>John Doe</strong>
+                <span>john@example.com</span>
+            </div>
+        </div>
     </div>
 </aside>
 {{end}}

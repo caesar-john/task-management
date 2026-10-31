@@ -1,16 +1,10 @@
 {{define "header"}}
-<header class="topbar">
-    <div>
-        <p class="eyebrow">WORKSPACE / OVERVIEW</p>
-        <h1>Rio Ferdinand</h1>
+<header class="welcome-header">
+    <div class="welcome-copy">
+        <p class="eyebrow">{{.DateLabel}}</p>
+        <h1>{{.Greeting}}</h1>
+        <p>Let's make today productive.</p>
     </div>
-
-    <div class="profile">
-        <div class="avatar">C</div>
-        <div>
-            <strong>My Workspace</strong>
-            <p>Personal account</p>
-        </div>
-    </div>
+    <a class="primary-button" href="/task">+ Add Task</a>
 </header>
 {{end}}

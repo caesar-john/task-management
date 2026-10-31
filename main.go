@@ -1,53 +1,34 @@
 package main
 
 import (
-	"fmt"
-	"html/template"
 	"log"
 	"net/http"
+	"os"
+
+	"github.com/caesar-john/task-management/config"
+	"github.com/caesar-john/task-management/handler"
 )
 
-type Task struct {
-	User_id     int
-	Title       string
-	Description string
-	status      string
-}
-
-func dashboardHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("dashboardHandler terpanggil")
-	tpl, err := template.ParseFiles(
-		"templates/layout/base.html",
-		"templates/partials/header.html",
-		"templates/partials/sidebar.html",
-		"templates/pages/dashboard.html",
-	)
-
-	if err != nil {
-		log.Println("ExecuteTemplate error: ", err)
-		http.Error(w, "Status Internal Server Error", http.StatusInternalServerError)
-		return
-	}
-
-	err = tpl.ExecuteTemplate(w, "base", nil)
-	if err != nil {
-		log.Println("ExecuteTemplate error: ", err)
-		http.Error(w, "Status Internal Server", http.StatusInternalServerError)
-	}
-}
-
 func main() {
-	mux := http.NewServeMux()
+	config.ConnectDb()
 
-	//handler
-	mux.HandleFunc("GET /dashboard", dashboardHandler)
-	//buat css
-	mux.Handle("/statics/", http.StripPrefix("/statics/", http.FileServer(http.Dir("statics"))))
+	//static
+	fs := http.FileServer(http.Dir("statics"))
 
-	var address = "localhost:8080"
-	fmt.Printf("Server started at %s\n", address)
-	err := http.ListenAndServe(address, mux)
-	if err != nil {
-		log.Fatal(err)
+	//dasboard
+	http.HandleFunc("GET /dashboard", handler.GetDashboard)
+	http.HandleFunc("GET /task", handler.GetTaskForm)
+	http.HandleFunc("POST /task", handler.CreateTask)
+	http.HandleFunc("POST /task/{id}/toggle", handler.ToggleTaskStatus)
+	http.Handle("/statics/", http.StripPrefix("/statics/", fs))
+
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	log.Println("Server running on Port", port)
+	if err := http.ListenAndServe(":"+port, nil); err != nil {
+		log.Fatal("Server failed: ", err)
 	}
 }

@@ -1,0 +1,29 @@
+{{define "content"}}
+<div class="task-form-wrap">
+	<section class="task-form-panel" aria-labelledby="task-form-heading">
+		<a class="back-link" href="/dashboard">&larr; Back to dashboard</a>
+		<h2 id="task-form-heading">Create a task</h2>
+		<p class="form-intro">Add a task to your workspace.</p>
+
+		{{if .Error}}
+		<p class="form-error" role="alert">{{.Error}}</p>
+		{{end}}
+
+		<form action="/task" method="post" class="task-form">
+			<label for="title">Title</label>
+			<input id="title" name="title" type="text" value="{{.Title}}" required autofocus>
+
+			<label for="description">Description <span>Optional</span></label>
+			<textarea id="description" name="description" rows="4">{{.Description}}</textarea>
+
+			<label for="deadline">Deadline</label>
+			<input id="deadline" name="deadline" type="date" value="{{.Deadline}}" required>
+
+			<div class="form-actions">
+				<a class="secondary-button" href="/dashboard">Cancel</a>
+				<button class="primary-button" type="submit">Create task</button>
+			</div>
+		</form>
+	</section>
+</div>
+{{end}}

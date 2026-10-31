@@ -1,48 +1,61 @@
+{{ define "content" }}
+<div class="dashboard-content">
+    <section class="stats-grid" aria-label="Task summary">
+        <article class="stat-card">
+            <span class="stat-icon tasks-icon" aria-hidden="true">&#9638;</span>
+            <div>
+                <p>Total Tasks</p>
+                <strong>{{.TotalTasks}}</strong>
+            </div>
+        </article>
+        <article class="stat-card">
+            <span class="stat-icon completed-icon" aria-hidden="true">&#10003;</span>
+            <div>
+                <p>Completed</p>
+                <strong>{{.CompletedTasks}}</strong>
+            </div>
+        </article>
+    </section>
 
-{{define "content"}}
-<div class="welcome">
-    <div>
-        <h2>Good day, Caesar 👋</h2>
-        <p>Test 123 wasu gila.</p>
-    </div>
-
-    <a href="/tasks/new" class="button button-primary">
-        + New Task
-    </a>
-</div>
-
-<div class="stats-grid">
-    <article class="stat-card">
-        <p>Total Tasks</p>
-        <h2>0</h2>
-        <span>Tasks in your workspace</span>
-    </article>
-
-    <article class="stat-card">
-        <p>In Progress</p>
-        <h2>0</h2>
-        <span>Tasks currently being worked on</span>
-    </article>
-
-    <article class="stat-card">
-        <p>Completed</p>
-        <h2>0</h2>
-        <span>Tasks finished</span>
-    </article>
-</div>
-
-<section class="panel">
-    <div class="panel-heading">
-        <div>
-            <h2>Recent Tasks</h2>
-            <p>Your latest task activities</p>
+    <section class="task-panel" id="task-list" aria-labelledby="task-heading">
+        <div class="panel-heading">
+            <div>
+                <h2 id="task-heading">Your tasks</h2>
+                <p>A small step every day adds up.</p>
+            </div>
+            <a class="view-all" href="/dashboard?status=All">View all <span aria-hidden="true">&rarr;</span></a>
         </div>
 
-        <a href="/tasks">View all</a>
-    </div>
+        <nav class="task-tabs" aria-label="Filter tasks">
+            <a class="tab {{if eq .Filter "All"}}active{{end}}" href="/dashboard?status=All">All <span>{{.TotalTasks}}</span></a>
+            <a class="tab {{if eq .Filter "Pending"}}active{{end}}" href="/dashboard?status=Pending">Pending <span>{{.PendingTasks}}</span></a>
+            <a class="tab {{if eq .Filter "Completed"}}active{{end}}" href="/dashboard?status=Completed">Completed <span>{{.CompletedTasks}}</span></a>
+        </nav>
 
-    <p class="empty-state">
-        No tasks yet. Create your first task!
-    </p>
-</section>
-{{end}}
+        <div class="task-list">
+            {{range .Tasks}}
+            <article class="task-item">
+                <form class="task-toggle-form" action="/task/{{.ID}}/toggle" method="post">
+                    <button class="task-check {{if eq .Status "Completed"}}checked{{end}}" type="submit" aria-label="Mark task {{if eq .Status "Completed"}}pending{{else}}completed{{end}}">
+                        {{if eq .Status "Completed"}}&#10003;{{end}}
+                    </button>
+                </form>
+                <div class="task-info">
+                    <h3>{{.Title}}</h3>
+                    <p>{{.Description}}</p>
+                    <span class="task-deadline">Due {{.Deadline.Format "Jan 2"}}</span>
+                </div>
+                {{if eq .Status "Completed"}}
+                <span class="task-status completed">Completed</span>
+                {{else}}
+                <span class="task-status pending">Pending</span>
+                {{end}}
+                <span class="task-menu" aria-hidden="true">&bull;&bull;&bull;</span>
+            </article>
+            {{else}}
+            <p class="empty-state">No tasks to show.</p>
+            {{end}}
+        </div>
+    </section>
+</div>
+{{ end }}
